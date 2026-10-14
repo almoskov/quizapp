@@ -12,7 +12,7 @@ body {
 
 header, main, footer {
   width: 100%;
-  max-width: 1100px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -65,24 +65,26 @@ header h1 { margin: 1.5rem 0 1rem; }
   border-radius: 6px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
-
-@media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
 
 .card {
   background: #fff;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  border-left: 6px solid transparent;
+  transition: border-color 0.15s, background 0.15s;
 }
+
+.card.correct { border-left-color: #27ae60; background: #f0faf3; }
+.card.wrong { border-left-color: #c0392b; background: #fdf1f0; }
 
 .card .category {
   font-size: 0.75rem;
@@ -97,6 +99,43 @@ header h1 { margin: 1.5rem 0 1rem; }
 .card details p { margin: 0.4rem 0 0; font-weight: 600; white-space: pre-line; }
 .card .no-answer { color: #999; font-style: italic; font-size: 0.85rem; }
 
+.mark-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.mark-actions button {
+  min-height: 2.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 2px solid;
+  background: #fff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mark-correct { border-color: #27ae60; color: #27ae60; }
+.mark-wrong { border-color: #c0392b; color: #c0392b; }
+.mark-correct[aria-pressed="true"] { background: #27ae60; color: #fff; }
+.mark-wrong[aria-pressed="true"] { background: #c0392b; color: #fff; }
+
+.result {
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.result p { margin: 0.25rem 0; }
+.result .hint { color: #888; font-size: 0.9rem; }
+.result.done { background: #2d6cdf; color: #fff; }
+.result .score { font-size: 2.5rem; font-weight: 800; }
+
 footer {
   padding: 1.5rem 1rem 2rem;
   text-align: center;
@@ -104,6 +143,7 @@ footer {
 }
 
 #reroll {
+  width: 100%;
   font-size: 1.1rem;
   padding: 0.8rem 1.6rem;
   border: none;

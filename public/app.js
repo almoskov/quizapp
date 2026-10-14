@@ -1,14 +1,16 @@
 (() => {
-  const TOTAL = 9;
+  const TOTAL = 20;
 
   const countsEl = document.getElementById("category-counts");
   const totalEl = document.getElementById("total");
   const errorEl = document.getElementById("error");
   const questionsEl = document.getElementById("questions");
   const rerollBtn = document.getElementById("reroll");
+  const resultEl = document.getElementById("result");
 
   let data = {};    // { category: [{ question, answer }] }
   let counts = {};  // { category: number }
+  let marks = [];   // per displayed question: true (correct), false (wrong), null (unmarked)
 
   function shuffle(arr) {
     const a = arr.slice();
@@ -94,6 +96,47 @@
     else rerollBtn.disabled = true;
   }
 
+  function renderResult() {
+    const answered = marks.filter((m) => m !== null).length;
+    const correct = marks.filter((m) => m === true).length;
+    const total = marks.length;
+
+    resultEl.hidden = total === 0;
+    if (!total) return;
+
+    const progress = `Helyes: ${correct} / ${total} · Értékelve: ${answered} / ${total}`;
+    if (answered < total) {
+      resultEl.classList.remove("done");
+      resultEl.innerHTML = "";
+      const p = document.createElement("p");
+      p.textContent = progress;
+      const hint = document.createElement("p");
+      hint.className = "hint";
+      hint.textContent = `Még ${total - answered} kérdést kell értékelni.`;
+      resultEl.append(p, hint);
+      return;
+    }
+
+    const score = Math.round((correct / total) * 9) + 1;
+    resultEl.classList.add("done");
+    resultEl.innerHTML = "";
+    const p = document.createElement("p");
+    p.textContent = progress;
+    const big = document.createElement("div");
+    big.className = "score";
+    big.textContent = `${score} pont`;
+    resultEl.append(big, p);
+  }
+
+  function setMark(index, value, card) {
+    marks[index] = marks[index] === value ? null : value;
+    card.classList.toggle("correct", marks[index] === true);
+    card.classList.toggle("wrong", marks[index] === false);
+    card.querySelector(".mark-correct").setAttribute("aria-pressed", String(marks[index] === true));
+    card.querySelector(".mark-wrong").setAttribute("aria-pressed", String(marks[index] === false));
+    renderResult();
+  }
+
   function generate() {
     const picked = [];
     for (const [category, n] of Object.entries(counts)) {
@@ -103,6 +146,7 @@
     }
 
     questionsEl.innerHTML = "";
+    marks = picked.map(() => null);
     shuffle(picked).forEach((q, i) => {
       const card = document.createElement("article");
       card.className = "card";
@@ -132,10 +176,32 @@
         card.appendChild(none);
       }
 
+      const actions = document.createElement("div");
+      actions.className = "mark-actions";
+
+      const ok = document.createElement("button");
+      ok.type = "button";
+      ok.className = "mark-correct";
+      ok.textContent = "✓ Helyes";
+      ok.setAttribute("aria-pressed", "false");
+      ok.addEventListener("click", () => setMark(i, true, card));
+
+      const bad = document.createElement("button");
+      bad.type = "button";
+      bad.className = "mark-wrong";
+      bad.textContent = "✗ Helytelen";
+      bad.setAttribute("aria-pressed", "false");
+      bad.addEventListener("click", () => setMark(i, false, card));
+
+      actions.append(ok, bad);
+      card.appendChild(actions);
+
       questionsEl.appendChild(card);
     });
 
     rerollBtn.disabled = false;
+    renderResult();
+    window.scrollTo({ top: 0 });
   }
 
   async function init() {
@@ -166,6 +232,9 @@
     }
   }
 
-  rerollBtn.addEventListener("click", generate);
+  rerollBtn.addEventListener("click", () => {
+    if (marks.some((m) => m !== null) && !confirm("Biztosan új kérdéseket sorsolsz? Az eddigi értékelés elvész.")) return;
+    generate();
+  });
   init();
 })();

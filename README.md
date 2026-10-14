@@ -1,8 +1,11 @@
 # quizapp
 
-A tiny web app that shows **9 random questions** picked from categories in
+A tiny mobile-friendly web app that shows **20 random questions** picked from categories in
 [`public/questions.json`](public/questions.json). You choose how many questions come
 from each category (defaults to an even split), and a button at the bottom re-randomizes them.
+
+Each question has **✓ Helyes / ✗ Helytelen** buttons. Once every question is marked, the
+score is shown: `ROUND(correct / total * 9) + 1` (1–10 pont).
 
 ## Questions file
 
