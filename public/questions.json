@@ -30,7 +30,8 @@
     "Milyen zenekarban kezdte Michael Jackson a pályafutását?": "Jackson 5",
     "Nevezz meg 2 Beatles-tagot!": "John Lennon\nPaul McCartney\nGeorge Harrison\nRingo Starr (Richard Starkey)",
     "Nevezz meg 3 KKevin számot!": "",
-    "Nevezz meg 3 manelistát!": ""
+    "Nevezz meg 3 manelistát!": "",
+    "Mi LL Junior real neve?": "Lesi Laszlo Csaba"
   },
   "Művészet, irodalom és vallás": {
     "Ki készítette a híres Dávid-szobrot?": "Michelangelo Buonarroti",
@@ -61,5 +62,8 @@
   "18+": {
     "Nevezz meg 5 szexpózt!": "",
     "Mondj 3 szinonimát a nemi szervekre (pénisz vagy vagina)!": ""
+  },
+  "Whats'on": {
+    "Milyen medve?": ""
   }
 }
