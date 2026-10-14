@@ -1,0 +1,8 @@
+services:
+  quizapp:
+    build: .
+    image: quizapp:latest
+    container_name: quizapp
+    ports:
+      - "80:80"
+    restart: unless-stopped

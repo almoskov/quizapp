@@ -1,0 +1,117 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f4f5f7;
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header, main, footer {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+header h1 { margin: 1.5rem 0 1rem; }
+
+#settings {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+}
+
+#category-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+}
+
+.count-control {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.count-control .name { font-weight: 600; }
+.count-control .avail { color: #888; font-size: 0.85rem; }
+
+.count-control button {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fafafa;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.count-control button:disabled { opacity: 0.4; cursor: default; }
+.count-control output { min-width: 1.5rem; text-align: center; font-weight: 600; }
+
+#total { margin: 0.75rem 0 0; font-weight: 600; }
+#total.bad { color: #c0392b; }
+
+.error {
+  background: #fdecea;
+  color: #c0392b;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card .category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #2d6cdf;
+  font-weight: 700;
+}
+
+.card .question { font-size: 1.05rem; flex: 1; }
+.card details summary { cursor: pointer; color: #555; }
+.card details p { margin: 0.4rem 0 0; font-weight: 600; white-space: pre-line; }
+.card .no-answer { color: #999; font-style: italic; font-size: 0.85rem; }
+
+footer {
+  padding: 1.5rem 1rem 2rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+#reroll {
+  font-size: 1.1rem;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 6px;
+  background: #2d6cdf;
+  color: #fff;
+  cursor: pointer;
+}
+
+#reroll:hover:not(:disabled) { background: #2458b8; }
+#reroll:disabled { background: #9db5e3; cursor: default; }
